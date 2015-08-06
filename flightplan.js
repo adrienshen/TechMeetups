@@ -1,7 +1,7 @@
 var plan = require('flightplan');
 
 // configuration
-plan.target('production', [
+plan.target('meetup', [
   {
     host: 'adrienshen.com',
     username: 'adriensh',
