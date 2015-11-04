@@ -6,7 +6,7 @@
 //meetip api key = 1719487a4a3c39b3e241e181837529
 
 $(function() {
-	
+
 		var marketId = []; //returned from the API
 		var allLatlng = []; //returned from the API
 		var allMarkers = []; //returned from the API
@@ -15,30 +15,30 @@ $(function() {
 		var pos;
 		var userCords;
 		var tempMarkerHolder = [];
-		
+
 		//Start geolocation
-		
-		if (navigator.geolocation) {    
-		
+
+		if (navigator.geolocation) {
+
 			function error(err) {
 				console.warn('ERROR(' + err.code + '): ' + err.message);
 			}
-			
+
 			function success(pos){
 				userCords = pos.coords;
-				
+
 				//return userCords;
 			}
-		
+
 			// Get the user's current position
 			navigator.geolocation.getCurrentPosition(success, error);
 			//console.log(pos.latitude + " " + pos.longitude);
 			} else {
 				alert('Geolocation is not supported in your browser');
 			}
-		
+
 		//End Geo location
-	
+
 		//map options
 		var mapOptions = {
 			zoom: 5,
@@ -55,18 +55,18 @@ $(function() {
 			scaleControl: false
 
 		};
-	
+
 	//Adding infowindow option
 	infowindow = new google.maps.InfoWindow({
 		content: "holding..."
 	});
-	
+
 	//Fire up Google maps and place inside the map-canvas div
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	//grab form data
     $('#chooseZip').submit(function() { // bind function to submit event of form
-      
+
       function setAllMap(map) {
         for (var i = 0; i < allMarkers.length; i++) {
           allMarkers[i].setMap(map);
@@ -75,19 +75,19 @@ $(function() {
       setAllMap(null);
   		allLatlng = []; //returned from the API
   		allMarkers = []; //returned from the API
-		
+
 		//define and set variables
 		var userZip = $("#textZip").val();
 		//console.log("This-> " + userCords.latitude);
-		
+
 		var accessURL;
-		
+
 		if(userZip){
 			accessURL = "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/zipSearch?zip=" + userZip;
 		} else {
 			accessURL = "http://search.ams.usda.gov/farmersmarkets/v1/data.svc/locSearch?lat=" + userCords.latitude + "&lng=" + userCords.longitude;
 		}
-			
+
 
 			//Use the zip code and return all market ids in area.
 			$.ajax({
@@ -95,15 +95,15 @@ $(function() {
 				contentType: "application/json; charset=utf-8",
 				url: accessURL,
 				dataType: 'jsonp',
-				success: function (data) {          
-          
+				success: function (data) {
+
 					 $.each(data.results, function (i, val) {
 						marketId.push(val.id);
 						marketName.push(val.marketname);
 					 });
-						
+
 					//console.log(marketName);
-					
+
 					var counter = 0;
 					//Now, use the id to get detailed info
 					$.each(marketId, function (k, v){
@@ -118,25 +118,25 @@ $(function() {
 							for (var key in data) {
 
 								var results = data[key];
-								
+
 								//console.log(results);
-								
+
 								//The API returns a link to Google maps containing lat and long. This pulls it apart.
 								var googleLink = results['GoogleLink'];
 								var latLong = decodeURIComponent(googleLink.substring(googleLink.indexOf("=")+1, googleLink.lastIndexOf("(")));
-								
+
 								var split = latLong.split(',');
 								var latitude = split[0];
 								var longitude = split[1];
-								
-								//set the markers.	  
+
+								//set the markers.
 								myLatlng = new google.maps.LatLng(latitude,longitude);
-						                  
+
 								allMarkers = new google.maps.Marker({
 									position: myLatlng,
 									map: map,
 									title: marketName[counter],
-									html: 
+									html:
 											'<div class="markerPop">' +
 											'<h1>' + marketName[counter].substring(4) + '</h1>' + //substring removes distance from title
 											'<h3>' + results['Address'] + '</h3>' +
@@ -147,20 +147,20 @@ $(function() {
 
 								//put all lat long in array
 								allLatlng.push(myLatlng);
-								
+
 								//Put the marketrs in an array
 								//tempMarkerHolder.push(allMarkers);
-								
+
 								counter++;
 								//console.log(counter);
 							};
-								
+
 								google.maps.event.addListener(allMarkers, 'click', function () {
 									infowindow.setContent(this.html);
 									infowindow.open(map, this);
 								});
-								
-								
+
+
 								//console.log(allLatlng);
 								//  Make an array of the LatLng's of the markers you want to show
 								//  Create a new viewpoint bound
@@ -172,8 +172,8 @@ $(function() {
 								}
 								//  Fit these bounds to the map
 								map.fitBounds (bounds);
-								
-										
+
+
 							}
 						});
 					}); //end .each
