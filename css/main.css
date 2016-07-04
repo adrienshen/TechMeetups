@@ -66,7 +66,8 @@ ul li{
 }
 
 
-.zipSearch{
+.zipSearch,
+.citySearch {
 	display: none;
 }
 
@@ -124,8 +125,8 @@ ul li{
 	}
 	
 	.learnButton {
-		margin-top: 10px;
-		margin-bottom: 20px;
+		margin-top: 5px;
+		margin-bottom: 5px;
 		background: #8077DA;
 		border: 0;
 		color: #D8D8DD;

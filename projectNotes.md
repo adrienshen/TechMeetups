@@ -3,7 +3,7 @@ For v1.2.0
 
 tasklist:
 
-  - cleaning up the old code a bit and remembering it.
+  - cleaning up the old code a bit and remembering what you wrote 3 months ago.
 
 
 thoughts:

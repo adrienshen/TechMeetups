@@ -62,21 +62,17 @@ $(function() {
 		// Grab form data ( zip code ) with some jQuery.
 		// On input form submit...
 		$('#chooseZip').submit(function() {
-				function clearMap(map) {
-						for ( var i = 0; i < allMarkers.length; ++i ) {
-          			allMarkers[i].setMap(null);
-				}
-		}
-				// Clearing arrays, maybe should be in clearMap fn.
-				meetupName = [];
-				meetupDescript = [];
-				meetupUrl = [];
-				meetupAddress = [];
-
-				allLatlng = [];
-				allMarkers = [];
-				clearMap(); // clear the data
-				//console.log(allMarkers);
+			function clearMap() {
+  			  meetupName = [];
+  				meetupDescript = [];
+  				meetupUrl = [];
+  				meetupAddress = [];
+  				allLatlng = [];
+      }
+			// Clearing arrays, maybe should be in clearMap fn.
+			clearMap(); // clear the data
+        
+			//console.log(allMarkers);
 
 		//define and set variables
 		var userZip = $("#textZip").val();
@@ -94,8 +90,6 @@ $(function() {
 		}
 
 		var meetupLat = [], meetupLon = [];
-			//Use the zip code and return all market ids in area.
-
 		// Make the HTTP request for meetup data
 		$.ajax({
 				type: "GET",
@@ -115,17 +109,13 @@ $(function() {
 										meetupName.push(val.name);
 										meetupDescript.push(val.description);
 										meetupUrl.push(val.event_url);
-
-										// meetupLat.push( venueObj.lat ) ,use dot notation whenever possible.
-										meetupLat.push(venueObj['lat']);
-										//meetupLong.push( venueObj.lon )
-										meetupLon.push(venueObj['lon']);
+										meetupLat.push(venueObj.lat);
+										meetupLon.push(venueObj.lon);
 
 										// Address
 										meetupAddress.push(
-										venueObj['address_1'] + "</h3><h3>" +
-										venueObj['city']
-										);
+                    venueObj.address_1 + "</h3><h3>" + venueObj.city);
+                    //console.log(meetupAddress);
 
 								}
 								else {
@@ -134,6 +124,11 @@ $(function() {
 								}
 
 						}); // end of $.each
+            // console.log(meetupName);
+            // console.log(meetupDescript);
+            // console.log(meetupUrl);
+            // console.log(meetupLat);
+            // console.log(meetupLon);
 
 						// We dont want any empty long or lats
 						meetupLon = _.without(meetupLon, 0);
