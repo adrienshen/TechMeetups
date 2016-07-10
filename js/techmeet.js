@@ -1,15 +1,19 @@
 
-var TechMeetups = (function() {
-  //Declare needed variables.
-  var key = "1719487a4a3c39b3e241e181837529";
-  // var meetupName = [];
-  // var meetupDescript = [];
-  // var meetupUrl = [];
-  // var meetupAddress = [];
-  //
-  // var meetupLat = [],
-  //     meetupLon = [];
+App.TechMeet = (function() {
+  //Modules instance.
+  var searchCities1 = App.SearchCities();
+  var searchZip1 = App.ZipSearch();
 
+  //Declare needed variables.
+  var CONST = {
+    MUKEY: "1719487a4a3c39b3e241e181837529",
+    CATEGORY: 34,
+    LPP: 50,
+    RADIUS: 50,
+
+  }
+
+  //Gmaps options.
 	var mapOptions = {
 			zoom: 4,
 			center: new google.maps.LatLng(37.09024, -100.712891),
@@ -26,13 +30,13 @@ var TechMeetups = (function() {
 	};
   
   var map;
-  var infoWindow = null; 
-  var pos; 
-  var userCords; 
+  var infoWindow = null;
+  var pos;
+  var userCords;
   var tempMarkerHolder = [];
   
   //Initialize the application
-  function initApp(){
+  function init(){
     initListenEvents();
     doGeoNavigation();
     googleMapsInit();
@@ -41,9 +45,24 @@ var TechMeetups = (function() {
   //Listen to event handlers
   function initListenEvents() {
     // zipcode submit event
-    $('#chooseZip').on('click', searchWithZipCode);
+    $('#submitZip').on('click', function(event){
+      event.preventDefault();
+
+      var zipEntered = $("#textZip").val();
+      console.log('zip = ', zipEntered);
+
+      searchZip1.search(zipEntered);
+    });
+    
     // city search event
-    $('#submitCity').on('click', SearchCities.search);
+    $('#submitCity').on('click', function(event){
+      event.preventDefault();
+      //Get value from field
+      var cityEntered = $('#textCity').val();
+      console.log('City value : ',  cityEntered);
+
+      searchCities1.search(cityEntered);
+    });
   }
   
   //Do geonavigation
@@ -75,76 +94,11 @@ var TechMeetups = (function() {
 		//Fire up Google maps and place inside the map-canvas div
 		map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   }
-    
-  //The main service starting point.
-  function searchWithZipCode(event) {
-    event.preventDefault();
-    
-    var userZip = $("#textZip").val();
-    var accessURL = "";
-    
-    //Form the url to be supply to the API.
-    if (userZip) {
-      accessURL = "https://api.meetup.com/2/open_events.json?zip="+ userZip +"&page=30&category=34&time=,1w&key=" + key;
-    } else {
-      alert('zip not valid or not entered.');
-    }
-    
-    //Make the actual AJAX call to Meetup & Gmaps APIS.
-    $.ajax({
-      type: 'GET',
-      contentType: "application/json; charset=utf-8",
-      url: accessURL,
-      dataType: 'jsonp',
-      
-      success: function(data) {
-        renderPointsCB(data);
-      }
-    });
-    return false; //so the form won't really submit and refresh the page.
-  }
   
-  
-  function renderPointsCB(data) {
-    console.log(data);
-    
-  //Clear the map, before rendering new points.
-    console.log('in clearMapBeforeRender fn');
-    var meetupName = [];
-    var meetupDescript = [];
-    var meetupUrl = [];
-    var meetupAddress = [];
-    var allLatLng = [];
-    var meetupLat = [];
-    var meetupLon = [];
-
-    var dataLen = data.results.length;
-    //console.log("api returned " + dataLen + " total results");
-    //clearMapBeforeRender();
-    //Loop through the data, prepare the arrays.
-    $.each(data.results, function(i, value){
-      var venueObj = value.venue;
-      
-      if (venueObj && venueObj.lat !== 0){
-        meetupName.push(value.name);
-        meetupDescript.push(value.description);
-        meetupUrl.push(value.event_url);
-				meetupLat.push(venueObj.lat);
-				meetupLon.push(venueObj.lon);
-        //Address information
-				meetupAddress.push(venueObj.address_1 + "</h3><h3>" + venueObj.city);
-      } else {
-        console.log("lat/lon not founded. ");
-        return 0;
-      }
-      
-			// We dont want any empty long or lats or values of 0.
-			meetupLon = _.without(meetupLon, 0);
-      meetupLat = _.without(meetupLat, 0);
-    });
-    placeEachLatLngPoint(meetupName, meetupDescript, meetupUrl, meetupLat, meetupLon, meetupAddress);
-  }
-  
+/*
+* GoogleMap place points/markers on the map plane and add event listeners to each marker.
+*
+*/
   function placeEachLatLngPoint(meetupName, meetupDescript, meetupUrl, meetupLat, meetupLon, meetupAddress) {
 
     var allLatLng = [];
@@ -178,6 +132,10 @@ var TechMeetups = (function() {
     increaseBounds(allLatLng);
   }
 
+/*
+* GoogleMap increase bounds.
+*
+*/
   function increaseBounds(allLatLng) {
         //  Make an array of the LatLng's of the markers you want to show
         //  Create a new viewpoint bound
@@ -191,8 +149,12 @@ var TechMeetups = (function() {
   }
 
   return {
+    CONST: CONST,
+    /*
+    * @params Object: data, the return data from Meetup Events API.
+    */
     increaseBounds: increaseBounds,
     placeEachLatLngPoint: placeEachLatLngPoint,
-    initApp: initApp,
+    init: init,
   }
 })();

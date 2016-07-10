@@ -1,3 +1,4 @@
+
 <html>
 	<head>
 		<title>Find Local Farmers Market | Learn the Map API</title>
@@ -9,15 +10,19 @@
 		<script src="bower_components/underscore/underscore.js" type="text/javascript"></script>
 		<script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
 
-		<script src="https://maps.googleapis.com/maps/api/js?key=" type="text/javascript"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZNWp4XpYouSL-NaQXIjXy47P88QUHllA" type="text/javascript"></script>
 
+		<script type="text/javascript" src="js/application.js"></script>
+		<script type="text/javascript" src="js/meetup-api-data.js"></script>
 		<script type="text/javascript" src="js/ui.js"></script>
-		<script type="text/javascript" src="js/meetup-cities.js"></script>
-		<script type="text/javascript" src="js/meetup-v2.js"></script>
+		<script type="text/javascript" src="js/utils.js"></script>
+		<script type="text/javascript" src="js/search-zip.js"></script>
+		<script type="text/javascript" src="js/search-cities.js"></script>
+		<script type="text/javascript" src="js/techmeet.js"></script>
 
 		
 		<script type="text/javascript">
-			$(function() { TechMeetups.initApp(); });
+			$(function() { App.TechMeet.init(); });
 		</script>
 	</head>
 
@@ -50,7 +55,7 @@
 			</div>
 
 			<div id="notes">
-				<p>Project is modified from:
+				<p>Originally inspiration from:
 					<a href="https://github.com/pauldessert/SeedTip"> SeedTip </a>
 				</p>
 			</div>
