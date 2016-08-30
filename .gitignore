@@ -1,4 +1,5 @@
 .idea/
 node_modules
 project-notes.md
+bower_components/
 

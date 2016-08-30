@@ -37,9 +37,8 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	margin-bottom: 17px;
-	font-weight: 300;
-	/* color: #ff5400; */
+	margin-bottom: 15px;
+	font-weight: 400;
 }
 
 h1 {
@@ -66,105 +65,117 @@ ul li{
 }
 
 
-.zipSearch,
-.citySearch {
+
+/* ================================================= */
+
+
+.zipSearch {
 	display: none;
 }
 
-/* Popup */
-.markerPop{
-	
-}
-
-
-.twitter{
-	float: left;
-}
-
-.facebook{
-	float: left;
-	width: 150px !important;
-	height: 35px !important;
-}
-
 /* tablets and desktop */
-@media only screen and (min-width: 361px) {
-	
+@media only screen and (min-width: 400px) {
+
+/* Map Canvas styles */
+#map-canvas{
+	height: 100%;
+	width: 100%;
+}
+
+/* ================================================= */
+/* SearchPanel styles */
+
+
 	p {
 		margin-bottom: 15px;
 		line-height: 20px;
 	}
 
-	#map-canvas{
-		height: 100%;
-    width: 100%;
-	}
-	#control{
-    position:absolute; top:0; left:0; z-index:999;
-		float: left;
+	.Unified-search{
+    	position:absolute; top:75px; left:100; z-index:999;
 		color: #000;
-    background-color:#fff;
-		width: 18%;
-		padding: 50px 30px 10px 30px;
-		border-right: 2px solid orange;
-		border-bottom: 2px solid orange;
+    	background-color:#FFF;
+		width: 25%;
+		padding: 10px 10px;
     
-    opacity:.8;
+    	opacity: 0.85;
+    	box-shadow: 0px 5px 10px 0px #555;
 	}
 
-	#control input[type=text]{
-		width: 98%;
-    padding:2%;
-		height: 40px;
-		font-size: 24px;
-    color:#000;
-		background-color: transparent;
-    border:none;
-		border-bottom: 2px solid #8077DA;
-    outline:none;
+	.search-header__title{
+		width: 50%;
+		float: left;
 	}
-	
-	.learnButton {
-		margin-top: 5px;
-		margin-bottom: 5px;
-		background: #8077DA;
-		border: 0;
-		color: #D8D8DD;
-		height: 37px;
-		line-height: 37px;
-		width: 100%;
+/*	.search-header__searchOpts{
+		width: 55%;
+		float: right;
+		text-align: right;
+	}
+*/
+/*	.search-header__searchOpts span{
+		display: absolute;
+		color: #FFF;
+		width: 45%;
+		background: #ff5722;
+		padding: 2%;
+		font-size: .8rem;
 		text-align: center;
 		cursor: pointer;
-    outline:none;
-    focused:none;
-    transition:all .5s ease-in;
 	}
-  .learnButton:hover {
-    background: #746BD8;
-  }
-	
-	#mc_embed_signup{
-	margin-top: 30px;
-	float: left;   
-	width: 300px;
+	.search-cityOpt {
+		float:left;
 	}
+	.search-zipOpt{
+		float:right;
+	}
+*/
+	input[type="search"]{
+		width: 65%;
+    	padding: 2%;
+    	padding-left: 10px;
 
-	#mc_embed_signup form label{
-		margin-bottom: 30px;
-		line-height: 20px;
-		clear: right;
-	}
-
-	#mc_embed_signup form input.email{
-		width: 100%;
 		height: 40px;
 		font-size: 24px;
-		background-color: #6B7283;
-		border: 1px solid #BE757E;
+    	color: #FFF;
+		background-color: #455055; /* dark grey bluish */
+    	border:none;
+    	border-radius: 3px;
+    	outline:none;
+    	transition: width 100ms linear,
+    		background-color 300ms linear;
 	}
+	.search--expanded{
+		width: 100% !important;
+		color: #555 !important;
+		background-color: #eeeeee !important;
+		transition: all 100ms linear;
+	}
+	
+	.goBtn {
+    	position: absolute;
+    	right: 122px;
+    	top: 55px;	    
+    	height: 40px;
+	    color: #FFF;
+	    float: right;
+	    border: none;
+	    width: 40px;
+	    border-radius: 0 3px 3px 0;
+	    background: #9E9E9E;
+	    cursor: pointer;
+    	transition: all 100ms linear;
+    	font-size: 1.1rem;
+	}
+	.goBtn--expanded{
+		right: 10;
+    	transition: all 100ms linear;
+	}
+	
 }
 
-/* phones */
+
+
+/* mobile? */
 @media only screen and (max-width: 360px) {
     
 	p {

@@ -1,8 +1,7 @@
 
 App.TechMeet = (function() {
   //Modules instance.
-  var searchCities1 = App.SearchCities();
-  var searchZip1 = App.ZipSearch();
+  var techMeetUI = App.TechMeetUI();
 
   //Declare needed variables.
   var CONST = {
@@ -37,34 +36,16 @@ App.TechMeet = (function() {
   
   //Initialize the application
   function init(){
-    initListenEvents();
+    
     doGeoNavigation();
+    
     googleMapsInit();
+
+    techMeetUI.renderUnifiedSearchPanel();
+
+
   }
-    
-  //Listen to event handlers
-  function initListenEvents() {
-    // zipcode submit event
-    $('#submitZip').on('click', function(event){
-      event.preventDefault();
-
-      var zipEntered = $("#textZip").val();
-      console.log('zip = ', zipEntered);
-
-      searchZip1.search(zipEntered);
-    });
-    
-    // city search event
-    $('#submitCity').on('click', function(event){
-      event.preventDefault();
-      //Get value from field
-      var cityEntered = $('#textCity').val();
-      console.log('City value : ',  cityEntered);
-
-      searchCities1.search(cityEntered);
-    });
-  }
-  
+      
   //Do geonavigation
   function doGeoNavigation() {
 		if (navigator.geolocation) {
