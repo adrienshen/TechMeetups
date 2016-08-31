@@ -80,7 +80,7 @@ App.TechMeet = (function() {
 * GoogleMap place points/markers on the map plane and add event listeners to each marker.
 *
 */
-  function placeEachLatLngPoint(meetupName, meetupDescript, meetupUrl, meetupLat, meetupLon, meetupAddress) {
+  function placeEachLatLngPoint(meetupName, meetupDescript, meetupUrl, meetupLat, meetupLon, meetupAddress, meetupTime) {
 
     var allLatLng = [];
     var markers = [];
@@ -94,8 +94,12 @@ App.TechMeet = (function() {
 						map: map,
 						title: "Meetup",
 						html:
+            /* temporary date in popup inline */
 								'<div class="markerPop">' +
                                 "<h2>"+ meetupName[i] +"</h2>" +
+                                
+                                "<div class='muTime'>@&nbsp;"+ meetupTime[i].time+ ' '+ meetupTime[i].weekDay+ ' '+ meetupTime[i].date+ ', '+ meetupTime[i].month+ ' '+meetupTime[i].year+ "</div>"+
+
                                 "<h3>"+ meetupAddress[i] +"</h3>" +
                                 "<p>"+ meetupDescript[i] +"</p>" +
                                 "<a href='"+ meetupUrl[i] +"'>"+ meetupUrl[i] +"</p>" +

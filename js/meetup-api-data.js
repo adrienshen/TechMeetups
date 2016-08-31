@@ -22,6 +22,7 @@ App.MeetupData = function() {
 		var allLatLng = [];
 		var muLat = [];
 		var muLon = [];
+		var muTime = [];
 
 		var dataLen = data.results.length;
 		//console.log("api returned " + dataLen + " total results");
@@ -32,6 +33,7 @@ App.MeetupData = function() {
 		  
 		  if (venueObj && venueObj.lat !== 0){
 		    muName.push(value.name);
+		    muTime.push( parseMiliTime( value.time ) );
 		    muDescript.push(value.description);
 		    muUrl.push(value.event_url);
 					muLat.push(venueObj.lat);
@@ -47,7 +49,27 @@ App.MeetupData = function() {
 			muLon = _.without(muLon, 0);
 		  	muLat = _.without(muLat, 0);
 		});
-		App.TechMeet.placeEachLatLngPoint(muName, muDescript, muUrl, muLat, muLon, muAddress);
+		App.TechMeet.placeEachLatLngPoint(muName, muDescript, muUrl, muLat, muLon, muAddress, muTime);
+	}
+
+/*
+* Parse mtime function
+*
+*/
+	function parseMiliTime(mtime) {
+
+		var utcTime = new Date(mtime);
+		var utcTimeArr = utcTime.toString().split(' ');
+		//console.log(utcTime);
+		var tObj = {
+			weekDay: utcTimeArr[0],
+			month: utcTimeArr[1],
+			date: utcTimeArr[2],
+			year: utcTimeArr[3],
+			time: utcTimeArr[4]
+		}
+		//console.log(tObj);
+		return tObj;
 	}
 
 }

@@ -66,6 +66,14 @@ ul li{
 
 
 
+/* Inside the markers */
+.muTime {
+	font-size: 1.25rem;
+	color: #2196f3;
+	padding-bottom: 10px;
+	font-weight: 800;
+}
+
 /* ================================================= */
 
 

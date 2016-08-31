@@ -25,6 +25,15 @@
 		<script type="text/javascript">
 			//This is the only line in jq function ready :)
 			$(function() { App.TechMeet.init(); });
+
+			if (navigator.geolocation){
+				console.log('Geolocation is supported');
+				navigator.geolocation.getCurrentPosition(function(results){
+					console.log(results);
+				});
+			} else {
+				console.log('Geolocation not supported for this browser/OS version.');
+			}
 		</script>
 	</head>
 
